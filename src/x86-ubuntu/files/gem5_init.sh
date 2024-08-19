@@ -15,6 +15,10 @@ mount -t sysfs /sys /sys
 cmdline=$(cat /proc/cmdline)
 no_systemd=false
 
+# Load gem5_bridge driver
+depmod --quick
+modprobe gem5_bridge
+
 # gem5-bridge exit signifying that kernel is booted
 # This will cause the simulation to exit. Note that this will
 # cause qemu to fail.

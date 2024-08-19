@@ -45,6 +45,7 @@ git clone https://github.com/gem5/gem5.git --depth=1 --filter=blob:none --no-che
 pushd gem5
 # Checkout just the files we need
 git sparse-checkout add util/m5
+git sparse-checkout add util/gem5_bridge
 git sparse-checkout add include
 git checkout
 # Install the headers globally so that other benchmarks can use them
@@ -55,6 +56,11 @@ pushd util/m5
 scons build/x86/out/m5
 cp build/x86/out/m5 /usr/local/bin/
 cp build/x86/out/libm5.a /usr/local/lib/
+popd
+
+# Build and insert the gem5_bridge driver
+pushd util/gem5_bridge
+make build install
 popd
 popd
 
