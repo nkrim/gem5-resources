@@ -58,9 +58,10 @@ cp build/x86/out/m5 /usr/local/bin/
 cp build/x86/out/libm5.a /usr/local/lib/
 popd
 
-# Build and insert the gem5_bridge driver
+# Build and insert the gem5-bridge driver
 pushd util/gem5_bridge
 make build install
+depmod --quick
 popd
 popd
 

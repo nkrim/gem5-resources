@@ -16,8 +16,7 @@ cmdline=$(cat /proc/cmdline)
 no_systemd=false
 
 # Load gem5_bridge driver
-depmod --quick
-modprobe gem5_bridge
+modprobe gem5_bridge || insmod /lib/modules/$(uname -r)/gem5/gem5_bridge.ko
 
 # gem5-bridge exit signifying that kernel is booted
 # This will cause the simulation to exit. Note that this will
