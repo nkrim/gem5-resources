@@ -22,7 +22,7 @@ modprobe gem5_bridge || insmod /lib/modules/$(uname -r)/gem5/gem5_bridge.ko
 # This will cause the simulation to exit. Note that this will
 # cause qemu to fail.
 printf "Kernel booted, In gem5 init...\n"
-gem5-bridge exit # TODO: Make this a specialized event.
+echo 0 > /dev/gem5/exit # TODO: Make this a specialized event.
 
 if [[ $cmdline == *"no_systemd"* ]]; then
     no_systemd=true
