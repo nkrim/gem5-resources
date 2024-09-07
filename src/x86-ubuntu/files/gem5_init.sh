@@ -16,7 +16,9 @@ cmdline=$(cat /proc/cmdline)
 no_systemd=false
 
 # Load gem5_bridge driver
-modprobe gem5_bridge || insmod /lib/modules/$(uname -r)/gem5/gem5_bridge.ko
+modprobe gem5_bridge \
+    gem5_bridge_baseaddr=0xffff0000 \
+    gem5_bridge_rangesize=0x10000
 
 # gem5-bridge exit signifying that kernel is booted
 # This will cause the simulation to exit. Note that this will
