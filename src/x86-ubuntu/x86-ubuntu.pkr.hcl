@@ -78,8 +78,8 @@ build {
   }
 
   provisioner "file" {
-  source      = "/home/gem5/vmlinux-x86-ubuntu"
-  destination = "./disk-image/vmlinux-x86-ubuntu"
-  direction   = "download"
+    source      = "/home/gem5/vmlinux-x86-ubuntu"
+    destination = "./disk-image/vmlinux-x86-ubuntu"
+    direction   = "download"
   }
 }

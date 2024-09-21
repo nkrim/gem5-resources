@@ -40,7 +40,7 @@ else
             # If we can't read the script exit the simulation. If we cannot exit the
             # simulation, this probably means that we are running in QEMU. So, ignore
             # future calls to gem5-bridge.
-            if ! gem5-bridge exit; then
+            if ! echo 0 > /dev/gem5/exit; then
                 # Useful for booting the disk image in (e.g.,) qemu for debugging
                 printf "gem5-bridge exit failed, dropping to shell.\n"
                 IGNORE_M5=1 /bin/bash

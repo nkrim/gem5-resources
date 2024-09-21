@@ -75,7 +75,7 @@ chmod u+s /usr/local/bin/gem5-bridge
 ln -s /usr/local/bin/gem5-bridge /usr/local/bin/m5
 
 # delete the git repo for gem5
-rm -rf gem5
+# rm -rf gem5
 echo "Done building and installing gem5-bridge (m5) and libm5"
 
 # You can extend this script to install your own packages here or by modifying the `x86-ubuntu.pkr.hcl` file.
@@ -83,14 +83,14 @@ echo "Done building and installing gem5-bridge (m5) and libm5"
 # Disable network by default
 echo "Disabling network by default"
 echo "See README.md for instructions on how to enable network"
-if [ -f /etc/netplan/50-cloud-init.yaml ]; then
-    mv /etc/netplan/50-cloud-init.yaml /etc/netplan/50-cloud-init.yaml.bak
-elif [ -f /etc/netplan/00-installer-config.yaml ]; then
-    mv /etc/netplan/00-installer-config.yaml /etc/netplan/00-installer-config.yaml.bak
-    netplan apply
-fi
+# if [ -f /etc/netplan/50-cloud-init.yaml ]; then
+#     mv /etc/netplan/50-cloud-init.yaml /etc/netplan/50-cloud-init.yaml.bak
+# elif [ -f /etc/netplan/00-installer-config.yaml ]; then
+#     mv /etc/netplan/00-installer-config.yaml /etc/netplan/00-installer-config.yaml.bak
+#     netplan apply
+# fi
 # Disable systemd service that waits for network to be online
-systemctl disable systemd-networkd-wait-online.service
-systemctl mask systemd-networkd-wait-online.service
+# systemctl disable systemd-networkd-wait-online.service
+# systemctl mask systemd-networkd-wait-online.service
 
 echo "Post Installation Done"

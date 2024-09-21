@@ -15,6 +15,13 @@ apt-get install -y build-essential
 echo "Installing serial service for autologin after systemd"
 mv /home/gem5/serial-getty@.service /lib/systemd/system/
 
+# Make sure the headers are installed to extract the kernel that DKMS
+# packages will be built against.
+sudo apt -y install "linux-headers-$(uname -r)" "linux-modules-extra-$(uname -r)"
+
+echo "Extracting linux kernel $(uname -r) to /home/gem5/vmlinux-arm-ubuntu"
+sudo bash -c "/usr/src/linux-headers-$(uname -r)/scripts/extract-vmlinux /boot/vmlinuz-$(uname -r) > /home/gem5/vmlinux-arm-ubuntu"
+
 echo "Installing the gem5 init script in /sbin"
 mv /home/gem5/gem5_init.sh /sbin
 mv /sbin/init /sbin/init.old
@@ -31,10 +38,11 @@ rm /etc/update-motd.d/*
 echo "Building and installing gem5-bridge (m5) and libm5"
 
 # Just get the files we need
-git clone https://github.com/gem5/gem5.git --depth=1 --filter=blob:none --no-checkout --sparse --single-branch --branch=stable
+git clone https://github.com/nkrim/gem5.git --depth=1 --filter=blob:none --no-checkout --sparse --single-branch --branch=gem5-bridge
 pushd gem5
 # Checkout just the files we need
 git sparse-checkout add util/m5
+git sparse-checkout add util/gem5_bridge
 git sparse-checkout add include
 git checkout
 # Install the headers globally so that other benchmarks can use them
@@ -45,6 +53,12 @@ pushd util/m5
 scons build/arm64/out/m5
 cp build/arm64/out/m5 /usr/local/bin/
 cp build/arm64/out/libm5.a /usr/local/lib/
+popd
+
+# Build and insert the gem5-bridge driver
+pushd util/gem5_bridge
+make build install
+depmod --quick
 popd
 popd
 
@@ -58,7 +72,7 @@ chmod u+s /usr/local/bin/gem5-bridge
 ln -s /usr/local/bin/gem5-bridge /usr/local/bin/m5
 
 # delete the git repo for gem5
-rm -rf gem5
+#rm -rf gem5
 echo "Done building and installing gem5-bridge (m5) and libm5"
 
 # You can extend this script to install your own packages here.

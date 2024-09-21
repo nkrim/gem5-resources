@@ -16,7 +16,7 @@ cmdline=$(cat /proc/cmdline)
 no_systemd=false
 
 # Load gem5_bridge driver
-## Default parameters
+## Default parameters (x86_64)
 gem5_bridge_baseaddr=0xffff0000
 gem5_bridge_rangesize=0x10000
 ## Try to read overloads from kernel arguments
